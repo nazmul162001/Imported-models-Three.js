@@ -12,7 +12,9 @@ const ImportModels = () => {
     const gui = new dat.GUI()
 
     // Canvas
-    const canvas = document.querySelector('canvas.webgl')
+    const canvas: HTMLElement = document.querySelector(
+      'canvas.webgl'
+    ) as HTMLElement
 
     // Scene
     const scene = new THREE.Scene()
@@ -93,7 +95,7 @@ const ImportModels = () => {
      * Renderer
      */
     const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
+      canvas,
     })
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
