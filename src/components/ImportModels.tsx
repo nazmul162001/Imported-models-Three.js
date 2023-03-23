@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as dat from 'lil-gui'
 
 const ImportModels = () => {
@@ -18,6 +19,22 @@ const ImportModels = () => {
 
     // Scene
     const scene = new THREE.Scene()
+
+    /**
+     * Models
+     */
+    const gltfLoader = new GLTFLoader()
+    gltfLoader.load('/models/FlightHelmet/glTF/FlightHelmet.gltf', (gltf) => {
+      // way-1
+      //   while (gltf.scene.children.length) {
+      //     scene.add(gltf.scene.children[0])
+      //   }
+      // way-2
+      const children = [...gltf.scene.children]
+      for (const child of children) {
+        scene.add(child)
+      }
+    })
 
     /**
      * Floor
