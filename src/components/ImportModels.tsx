@@ -4,7 +4,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import * as dat from 'lil-gui'
-import { MixOperation } from 'three'
 
 const ImportModels = () => {
   useEffect(() => {
@@ -26,33 +25,19 @@ const ImportModels = () => {
      * Models
      */
     const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath('/draco/')
     const gltfLoader = new GLTFLoader()
+    dracoLoader.setDecoderPath('/draco/')
     gltfLoader.setDRACOLoader(dracoLoader)
 
-    //@ts-ignore
-    let mixer = null
-
+    let mixer: any = null
     gltfLoader.load('/models/Fox/glTF/Fox.gltf', (gltf) => {
-      //   console.log(gltfLoader)
-      // way-1
-      //   while (gltf.scene.children.length) {
-      //     scene.add(gltf.scene.children[0])
-      //   }
-      // way-2
-      //   const children = [...gltf.scene.children]
-      //   for (const child of children) {
-      //     scene.add(child)
-      //   }
-
+      console.log(gltf)
       mixer = new THREE.AnimationMixer(gltf.scene)
       const action = mixer.clipAction(gltf.animations[2])
       action.play()
-      gltf.scene.scale.set(0.025, 0.025, 0.025)
-      // ShortCut way
+      gltf.scene.scale.set(0.01, 0.01, 0.01)
       scene.add(gltf.scene)
     })
-
     /**
      * Floor
      */
