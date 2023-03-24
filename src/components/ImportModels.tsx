@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import * as dat from 'lil-gui'
+import { MixOperation } from 'three'
 
 const ImportModels = () => {
   useEffect(() => {
@@ -28,7 +29,12 @@ const ImportModels = () => {
     dracoLoader.setDecoderPath('/draco/')
     const gltfLoader = new GLTFLoader()
     gltfLoader.setDRACOLoader(dracoLoader)
+
+    //@ts-ignore
+    let mixer = null
+
     gltfLoader.load('/models/Fox/glTF/Fox.gltf', (gltf) => {
+      //   console.log(gltfLoader)
       // way-1
       //   while (gltf.scene.children.length) {
       //     scene.add(gltf.scene.children[0])
@@ -39,6 +45,9 @@ const ImportModels = () => {
       //     scene.add(child)
       //   }
 
+      mixer = new THREE.AnimationMixer(gltf.scene)
+      const action = mixer.clipAction(gltf.animations[2])
+      action.play()
       gltf.scene.scale.set(0.025, 0.025, 0.025)
       // ShortCut way
       scene.add(gltf.scene)
@@ -137,6 +146,13 @@ const ImportModels = () => {
       const elapsedTime = clock.getElapsedTime()
       const deltaTime = elapsedTime - previousTime
       previousTime = elapsedTime
+
+      // Update mixer
+      //@ts-ignore
+      if (mixer !== null) {
+        //@ts-ignore
+        mixer.update(deltaTime)
+      }
 
       // Update controls
       controls.update()
