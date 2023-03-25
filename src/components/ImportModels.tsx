@@ -6,10 +6,6 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import * as dat from 'lil-gui'
 
 const ImportModels = () => {
-  // testing code///
-  // const testing = new THREE.WebGLTest()
-  // testing code///
-
   useEffect(() => {
     /**
      * Base
